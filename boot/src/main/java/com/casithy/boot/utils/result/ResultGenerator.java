@@ -1,4 +1,4 @@
-package com.casithy.boot.Unite.result; 
+package com.casithy.boot.utils.result; 
 /** 
 * @author Casithy blog: https://casithy.cn
 * @version 创建时间：2018年11月1日 上午11:31:48 

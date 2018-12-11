@@ -1,4 +1,4 @@
-package com.casithy.boot.Unite.result;
+package com.casithy.boot.utils.result;
 
 /**
  * 
