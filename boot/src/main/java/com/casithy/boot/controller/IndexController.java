@@ -1,10 +1,11 @@
-package com.casithy.boot.Index.controller;
+package com.casithy.boot.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.casithy.boot.Unite.result.Result;
-import com.casithy.boot.Unite.result.ResultGenerator;
+import com.casithy.boot.utils.result.Result;
+import com.casithy.boot.utils.result.ResultGenerator;
+
 
 /**
  * 
