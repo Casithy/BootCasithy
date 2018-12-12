@@ -1,6 +1,11 @@
 package com.casithy.boot.model;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * @author Casithy blog: https://casithy.cn
@@ -9,7 +14,7 @@ import java.io.Serializable;
  *
  */
 
-public class User implements Serializable{
+public class User implements UserDetails,Serializable{
 
 	private static final long serialVersionUID = 1L;
 
@@ -28,7 +33,12 @@ public class User implements Serializable{
     /**
      * 上次登录最后活跃时间
      */
-    private Integer logged;
+    private String logged;
+    
+    /**
+     * 权限列表
+     */
+    private List<? extends GrantedAuthority> authorities;
 
 	public String getId() {
 		return id;
@@ -54,12 +64,41 @@ public class User implements Serializable{
 		this.password = password;
 	}
 
-	public Integer getLogged() {
+	public String getLogged() {
 		return logged;
 	}
 
-	public void setLogged(Integer logged) {
+	public void setLogged(String logged) {
 		this.logged = logged;
+	}
+	
+	public void setAuthorities(List<? extends GrantedAuthority> authorities) {
+        this.authorities = authorities;
+    }
+	
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return authorities;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
 	}
 }
  

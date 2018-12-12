@@ -10,5 +10,7 @@ import com.casithy.boot.model.User;
  */
 public interface UserService{
 	int addUser(User user);
+	
+	User loadUserByUserName(String userName);
 }
  

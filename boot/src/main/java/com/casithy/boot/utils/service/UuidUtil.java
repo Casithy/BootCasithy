@@ -8,7 +8,7 @@ import java.util.UUID;
  * @version 创建时间：2018年12月11日 下午5:11:16
  *
  */
-public class Uuid {
+public class UuidUtil {
 	public static String getUuid() {
 		UUID uuid = UUID.randomUUID();
 		return uuid.toString();
