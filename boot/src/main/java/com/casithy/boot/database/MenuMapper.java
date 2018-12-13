@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
+import com.casithy.boot.database.mapper.BaseMapper;
 import com.casithy.boot.model.Menu;
 
 /**
@@ -15,7 +16,7 @@ import com.casithy.boot.model.Menu;
  */
 @Mapper
 @Component
-public interface MenuMapper {
+public interface MenuMapper extends BaseMapper<Menu>{
 
 	List<Menu> loadMenusByUserId(String userId);
 
