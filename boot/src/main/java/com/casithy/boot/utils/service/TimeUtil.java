@@ -23,5 +23,9 @@ public class TimeUtil {
 		String timeNow = sdf.format(new Date(Long.parseLong(timeStamp)));
 		return timeNow;
 	}
+	
+	public static void main(String[] args) {
+		System.out.println(getTimeStamp());
+	}
 }
  

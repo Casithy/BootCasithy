@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.casithy.boot.database.UserDao;
+import com.casithy.boot.database.UserMapper;
 import com.casithy.boot.model.User;
 import com.casithy.boot.service.UserService;
 
@@ -25,7 +25,7 @@ import tk.mybatis.mapper.entity.Example.Criteria;
 public class UserServiceImpl implements UserService{
 	
 	@Autowired
-	private UserDao userDao;
+	private UserMapper userDao;
 	
 	@Override
 	public int addUser(User user) {

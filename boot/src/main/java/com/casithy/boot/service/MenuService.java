@@ -1,4 +1,9 @@
-package com.casithy.boot.service; 
+package com.casithy.boot.service;
+
+import java.util.List;
+
+import com.casithy.boot.model.Menu;
+
 /**
  * @author Casithy blog: https://casithy.cn
  *
@@ -6,6 +11,8 @@ package com.casithy.boot.service;
  *
  */
 public interface MenuService {
+
+	List<Menu> loadMenusByUserId(String userId);
 
 }
  
