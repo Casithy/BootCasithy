@@ -19,6 +19,5 @@ public class TdesPasswordEncoder implements PasswordEncoder {
 	public boolean matches(CharSequence rawPassword, String encodedPassword) {
 		return encodedPassword.equals(rawPassword);
 	}
-	
 }
  

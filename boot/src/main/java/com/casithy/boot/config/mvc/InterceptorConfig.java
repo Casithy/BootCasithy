@@ -22,6 +22,7 @@ public class InterceptorConfig extends WebMvcConfigurationSupport {
         //将默认配置的 /** 映射到 /static （或/public、/resources、/META-INF/resources）
         registry.addResourceHandler("/**")
                 .addResourceLocations("classpath:/resources/")
-                .addResourceLocations("classpath:/static/");
+                .addResourceLocations("classpath:/static/")
+                .addResourceLocations("classpath:/templates/");
     }
 }

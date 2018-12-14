@@ -35,9 +35,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
+//		http.csrf().disable().authorizeRequests()
+//							  //公共资源列表 
+//							 .antMatchers("/css/**","/error/**","/fonts/**","/img/**","/js/**").permitAll()
+//							  //权限认证列表
+////							 .antMatchers("/admin/**","/upload/**").hasAnyRole("ADMIN")
+////				             .antMatchers("/order/**").hasAnyRole("USER","ADMIN")
+////				             .antMatchers("/room/**").hasAnyRole("USER","ADMIN")
+//							 .anyRequest().authenticated().and().formLogin()
+//							 .loginPage("/login").successForwardUrl("/index").failureForwardUrl("/login")
+//							 .and().exceptionHandling().accessDeniedPage("/403");
+							 
+							 
         http.authorizeRequests()
                 // 所有用户均可访问的资源
-                .antMatchers( "/css/**","/error/**","/js/**","/img/**","/fonts/**","/login","/index").permitAll()
+                .antMatchers("/index","/css/**","/error/**","/js/**","/img/**","/fonts/**","/login","/captcha.jpg","/header.html","/userLogin").permitAll()
                 // 任何尚未匹配的URL只需要验证用户即可访问
                 .anyRequest().authenticated()
                 .and()
@@ -45,7 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .and()
                 //权限拒绝的页面
                 .exceptionHandling().accessDeniedPage("/403");
- 
+        http.headers().frameOptions().sameOrigin();
         http.logout().logoutSuccessUrl("/login");
     }
 	
