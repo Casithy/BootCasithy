@@ -29,5 +29,7 @@
 hs_err_pid*
 */target/*
 */settings
-*/settings/*
+*/settings
+boot/.settings/
+
 
