@@ -25,15 +25,17 @@ public class IndexController {
 	
 	@RequestMapping("/404")
     public String to404()  {
-        return "404";
+        return "/error/404";
     }
+	
     @RequestMapping("/403")
     public String to403()  {
-        return "403";
+        return "/error/403";
     }
+    
     @RequestMapping("/500")
     public String to500()  {
-        return "500";
+        return "/error/500";
     }
 }
  

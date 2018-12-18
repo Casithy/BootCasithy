@@ -1,9 +1,14 @@
 package com.casithy.boot.controller;
 
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.casithy.boot.config.security.SecurityUtils;
 import com.casithy.boot.model.User;
 import com.casithy.boot.service.UserService;
 import com.casithy.boot.utils.service.TdesUtil;
@@ -18,22 +23,33 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @Slf4j
-@Controller
+@RestController
 @RequestMapping(value = "/user")
 public class UserController {
 	
 	@Autowired
 	private UserService userService;
 	
+	@RequestMapping(value="/loginUserInfo")
+	public User loginUserInfo() {
+		User user = SecurityUtils.getUser();
+		return user;
+	}
+	
+	@ResponseBody
 	@RequestMapping(value="/insert")
-	public void insert() {
-		User user = new User();
+	public int insert(User user) {
 		user.setId(UuidUtil.getUuid());
-		user.setPassword(TdesUtil.encode3Des(user.getId(), "2134"));
-		user.setUsername("14110572101");
+		user.setPassword(TdesUtil.encode3Des(user.getId(), user.getPassword()));
 		user.setLogged(TimeUtil.getTimeStamp());
-		log.info("这就是个测试");
-		userService.addUser(user);
+		log.info("===== insert user table , id: "+ user.getId() +", username: "+ user.getUsername() +" =====");
+		return userService.addUser(user);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/loadUserlist/{pageNum}/{pageSize}")
+	public List<User> loadUserlist(@PathVariable("pageNum") int pageNum, @PathVariable("pageSize") int pageSize){
+		return userService.loadUserlist(pageNum, pageSize);
 	}
 }
  

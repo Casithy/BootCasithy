@@ -1,5 +1,8 @@
 package com.casithy.boot.service;
 
+
+import java.util.List;
+
 import com.casithy.boot.model.User;
 
 /**
@@ -12,5 +15,7 @@ public interface UserService{
 	int addUser(User user);
 	
 	User loadUserByUserName(String userName);
+	
+	List<User> loadUserlist(int pageNum, int pageSize);
 }
  

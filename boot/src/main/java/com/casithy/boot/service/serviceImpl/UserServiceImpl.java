@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.casithy.boot.database.UserMapper;
 import com.casithy.boot.model.User;
 import com.casithy.boot.service.UserService;
+import com.github.pagehelper.PageHelper;
 
 import lombok.extern.slf4j.Slf4j;
 import tk.mybatis.mapper.entity.Example;
@@ -25,11 +26,11 @@ import tk.mybatis.mapper.entity.Example.Criteria;
 public class UserServiceImpl implements UserService{
 	
 	@Autowired
-	private UserMapper userDao;
+	private UserMapper userMapper;
 	
 	@Override
 	public int addUser(User user) {
-		return userDao.insert(user);
+		return userMapper.insert(user);
 	}
 
 	@Override
@@ -37,8 +38,8 @@ public class UserServiceImpl implements UserService{
 		log.info("===== start loadUserByUserName method =====");
 		Example example = new Example(User.class);
 		Criteria criteria = example.createCriteria();
-		criteria.andCondition("username="+userName);
-		List<User> userList = userDao.selectByExample(example);
+		criteria.andCondition("username = '" + userName +"'");
+		List<User> userList = userMapper.selectByExample(example);
 		if(null == userList || userList.isEmpty()) {
 			log.error("===== UserName is "+ userName +", loadUserByUserName method return null =====");
 			return null;
@@ -48,5 +49,11 @@ public class UserServiceImpl implements UserService{
 		}
 	}
 
+	@Override
+	public List<User> loadUserlist(int pageNum, int pageSize) {
+		PageHelper.startPage(pageNum,pageSize);
+		return userMapper.selectAll();
+	}
+	
 }
  

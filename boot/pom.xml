@@ -5,7 +5,7 @@
 
 	<groupId>com.casithy</groupId>
 	<artifactId>boot</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
 	<name>boot</name>
@@ -56,18 +56,20 @@
 		<dependency>
 		    <groupId>com.github.pagehelper</groupId>
 		    <artifactId>pagehelper-spring-boot-starter</artifactId>
-		    <version>1.2.5</version>
-		</dependency>
+		    <version>1.2.3</version>
+		</dependency> 
 		<dependency>
 	      <groupId>tk.mybatis</groupId>
 	      <artifactId>mapper-spring-boot-starter</artifactId>
 	      <version>2.1.0</version>
 	    </dependency>
+	    <!-- 登录用验证码 --> 
 	    <dependency>
             <groupId>com.github.axet</groupId>
             <artifactId>kaptcha</artifactId>
             <version>0.0.9</version>
         </dependency>
+        <!-- spring安全框架 --> 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
@@ -88,6 +90,21 @@
             <groupId>org.springframework.boot</groupId>
 	        <artifactId>spring-boot-starter-thymeleaf</artifactId>
 	    </dependency>
+	    <!-- start redis --> 
+	    <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-pool2</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.47</version>
+		</dependency> 
+		<!-- end redis --> 
 	</dependencies>
 
 	<build>

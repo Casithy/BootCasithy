@@ -25,6 +25,7 @@ import com.casithy.boot.service.UserService;
 import com.casithy.boot.utils.result.Result;
 import com.casithy.boot.utils.result.ResultGenerator;
 import com.casithy.boot.utils.service.ConstantVal;
+import com.casithy.boot.utils.service.RedisUtil;
 import com.casithy.boot.utils.service.TdesUtil;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 
@@ -57,13 +58,23 @@ public class LoginController {
         userInfo.setPassword(password);
         String inputCode = request.getSession().getAttribute(ConstantVal.CHECK_CODE).toString();
         
+        if(null == inputCode) {
+        	return ResultGenerator.genFailResult("验证码失效，请刷新重试.");
+        }
+        
         if (StringUtils.isEmpty(kaptcha) || !inputCode.equals(kaptcha)) {
             return ResultGenerator.genFailResult("请输入正确的验证码.");
         }
         
+        User user = userService.loadUserByUserName(username);
+        
+        if(null == user) {
+        	return ResultGenerator.genFailResult("登录失败，用户名或密码错误.");
+        }
+        
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken 
         									= new UsernamePasswordAuthenticationToken(username, 
-        											TdesUtil.encode3Des(userService.loadUserByUserName(username).getId(), password));
+        											TdesUtil.encode3Des(user.getId(), password));
         
         try{
             //使用SpringSecurity拦截登陆请求 进行认证和授权

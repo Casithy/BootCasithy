@@ -11,6 +11,7 @@ public class Menu {
     private String name;
     private String url;
     private String parentId;
+    private String level;
     
 	public String getId() {
 		return id;
@@ -35,6 +36,12 @@ public class Menu {
 	}
 	public void setParentId(String parentId) {
 		this.parentId = parentId;
+	}
+	public String getLevel() {
+		return level;
+	}
+	public void setLevel(String level) {
+		this.level = level;
 	}
 }
  
