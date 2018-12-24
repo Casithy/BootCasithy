@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.casithy.boot.config.security.SecurityUtils;
 import com.casithy.boot.model.User;
+import com.casithy.boot.service.MenuService;
 import com.casithy.boot.service.UserService;
 import com.casithy.boot.utils.service.TdesUtil;
 import com.casithy.boot.utils.service.TimeUtil;
@@ -30,9 +31,16 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private MenuService menuService;
+	
 	@RequestMapping(value="/loginUserInfo")
 	public User loginUserInfo() {
 		User user = SecurityUtils.getUser();
+		if(null != user) {
+			user.setMenus(menuService.loadMenusByUserId(user.getId()));
+		}
+		user.setPassword("");
 		return user;
 	}
 	

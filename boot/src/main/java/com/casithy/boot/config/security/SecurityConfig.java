@@ -49,11 +49,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 							 
         http.authorizeRequests()
                 // 所有用户均可访问的资源
-                .antMatchers("/index","/css/**","/error/**","/js/**","/img/**","/fonts/**","/login","/captcha.jpg","/header.html","/userLogin").permitAll()
+                .antMatchers("/css/**",
+                			 "/error/**",
+                			 "/js/**",
+                			 "/img/**",
+                			 "/fonts/**",
+                			 "/index",
+                			 "/login",
+                			 "/captcha.jpg",
+                			 "/userLogin")
+                .permitAll()
                 // 任何尚未匹配的URL只需要验证用户即可访问
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login").successForwardUrl("/index").failureForwardUrl("/login?error=1")
+                .formLogin().loginPage("/login").failureForwardUrl("/login")
                 .and()
                 //权限拒绝的页面
                 .exceptionHandling().accessDeniedPage("/403");

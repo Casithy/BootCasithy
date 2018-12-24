@@ -25,7 +25,6 @@ import com.casithy.boot.service.UserService;
 import com.casithy.boot.utils.result.Result;
 import com.casithy.boot.utils.result.ResultGenerator;
 import com.casithy.boot.utils.service.ConstantVal;
-import com.casithy.boot.utils.service.RedisUtil;
 import com.casithy.boot.utils.service.TdesUtil;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 
@@ -85,7 +84,6 @@ public class LoginController {
             HttpSession session = request.getSession();
             session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext()); // 这个非常重要，否则验证后将无法登陆
         }catch (BadCredentialsException e){
-            e.printStackTrace();
             return ResultGenerator.genFailResult("登录失败，用户名或密码错误.");
         }
         catch (Exception e) {

@@ -1,7 +1,15 @@
 package com.casithy.boot.controller;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.casithy.boot.model.User;
+import com.casithy.boot.utils.result.ResultGenerator;
 
 /**
  * 
@@ -14,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class IndexController {
 	
 	@RequestMapping("/index")
-	public String index() {
+	public String index(Map<String, Object> map) {
 		return "index";
 	}
 	
@@ -36,6 +44,11 @@ public class IndexController {
     @RequestMapping("/500")
     public String to500()  {
         return "/error/500";
+    }
+    @RequestMapping("/login-error")
+    public String loginError(Model model,HttpSession session) {
+    	model.addAttribute("result", "error");
+    	return "login";
     }
 }
  

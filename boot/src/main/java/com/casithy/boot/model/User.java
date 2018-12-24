@@ -39,7 +39,13 @@ public class User implements UserDetails,Serializable{
      * 权限列表
      */
     private List<? extends GrantedAuthority> authorities;
-
+    
+    /**
+     * 菜单列表
+     * @return
+     */
+    private List<Menu> menus;
+    
 	public String getId() {
 		return id;
 	}
@@ -99,6 +105,14 @@ public class User implements UserDetails,Serializable{
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+
+	public List<Menu> getMenus() {
+		return menus;
+	}
+
+	public void setMenus(List<Menu> menus) {
+		this.menus = menus;
 	}
 }
  

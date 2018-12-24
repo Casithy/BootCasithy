@@ -4,10 +4,14 @@
 <mapper namespace="com.casithy.boot.database.MenuMapper">
     <select id="loadMenusByUserId" resultType="com.casithy.boot.model.Menu">
 			SELECT
-				m.*
+				m.id,
+				m.name,
+        		m.url,
+        		m.parent_id as parentId,
+				m.level
 			FROM
 				(SELECT * FROM `user`) AS u
-			INNER JOIN user_role AS ur ON u.id = ur.user_id AND u.id = #{userId}
+			INNER JOIN user_role AS ur ON u.id = ur.user_id AND u.id = 'e3b08d4c-508e-4caf-b2d4-404cade93544'
 			INNER JOIN role AS r ON r.id = ur.role_id
 			INNER JOIN role_menu AS rm ON rm.role_id = r.id
 			INNER JOIN menu AS m ON rm.menu_id = m.id
