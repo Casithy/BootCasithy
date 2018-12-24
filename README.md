@@ -7,3 +7,4 @@
 4、 druid </br>
 5、 kaptcha </br>
 6、 spring security </br>
+7、 thymeleaf </br>
