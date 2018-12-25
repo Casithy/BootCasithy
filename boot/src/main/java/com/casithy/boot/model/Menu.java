@@ -12,6 +12,7 @@ public class Menu {
     private String url;
     private String parentId;
     private String level;
+    private String sortNo;
     
 	public String getId() {
 		return id;
@@ -42,6 +43,12 @@ public class Menu {
 	}
 	public void setLevel(String level) {
 		this.level = level;
+	}
+	public String getSortNo() {
+		return sortNo;
+	}
+	public void setSortNo(String sortNo) {
+		this.sortNo = sortNo;
 	}
 }
  

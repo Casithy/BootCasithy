@@ -19,23 +19,8 @@
 				<a class="navbar-brand" href="#">Boot后台模板</a>
 			</div>
 	
-			<div class="collapse navbar-collapse"
-				id="bs-example-navbar-collapse-2">
-				<ul class="nav navbar-nav">
-					<li class="active"></li>
-					<li><a href="#">活动管理</a></li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-expanded="false">
-							系统管理 <span class="caret"></span>
-					</a>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">个人信息</a></li>
-							<li><a href="#">主题设置</a></li>
-						</ul></li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="./login.html">登录</a></li>
-				</ul>
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+				<div id="menus"></div>
 			</div>
 		</div>
 	</nav>
@@ -47,8 +32,59 @@
 	            dataType: "json",
 	            success: function(data){
 	            	console.log(data);
+	            	var menus = new Array(data.menus);
+	            	var result = "";
+	            	for(var i = 0;i < menus.length; i++){
+	            		for(var item in menus[i]){
+	            			if(menus[i][item].level == 1){
+	            				var num = judgeTheMenu(menus[i][item].id,menus);
+	            				if(num == 0){
+	            					result += "<li><a href='"+ menus[i][item].url +"'>"+ menus[i][item].name +"</a></li>"
+	            				}
+	            				else{
+	            					result += "<ul class='nav navbar-nav'> <li class='active'></li>";
+	            					result += "<li class='dropdown'>";
+	            					result += "<a href='"+ menus[i][item].url +"' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>"+ menus[i][item].name +"<span class='caret'></span></a>";
+	            					result += loadAMenu(menus[i][item].id,menus);
+	            					result += "</li>";
+	            					result += "</ul>";
+	            				}
+	            			}
+	            		}
+	            	}
+	            	result += "<ul class='nav navbar-nav navbar-right'><li><a href='/logout'>退出</a></li></ul>";
+	            	result += "<ul class='nav navbar-nav navbar-right'><li><a href='#'>"+ data.username +"</a></li></ul>";
+	            	document.getElementById("menus").innerHTML = result;
+	            },
+	            error:function(XMLHttpRequest, textStatus, errorThrown){
+	            	var result = "";
+	            	result += "<ul class='nav navbar-nav navbar-right'><li><a href='/login.html'>登录</a></li></ul>"
+	            	document.getElementById("menus").innerHTML = result;
 	            }
 	       });
 	    });
+	    function judgeTheMenu(menusId,menus){
+	    	var num = 0;
+	    	for(var i = 0;i < menus.length; i++){
+        		for(var item in menus[i]){
+        			if(menus[i][item].parentId == menusId){
+        				num = num + 1;
+        			}
+        		}
+        	}
+	    	return num;
+	    }
+	    function loadAMenu(menusId,menus){
+	    	var result = "<ul class='dropdown-menu' role='menu'>";
+    		for(var i = 0;i < menus.length; i++){
+        		for(var item in menus[i]){
+        			if(menus[i][item].parentId == menusId){
+        				result += "<li><a href='"+ menus[i][item].url +"'>"+ menus[i][item].name +"</a></li>"
+        			}
+        		}
+        	}
+    		result += "</ul>";
+    		return result;
+	    }
 	</script>
 </html>

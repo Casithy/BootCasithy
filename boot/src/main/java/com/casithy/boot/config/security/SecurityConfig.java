@@ -24,6 +24,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
+	AuthSuccess authsuccess;
+	
+	@Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
         auth.userDetailsService(customUserDetailsService())
                 .passwordEncoder(passwordEncoder());
@@ -62,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 // 任何尚未匹配的URL只需要验证用户即可访问
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login").failureForwardUrl("/login")
+                .formLogin().loginPage("/login").successHandler(authsuccess).failureForwardUrl("/login")
                 .and()
                 //权限拒绝的页面
                 .exceptionHandling().accessDeniedPage("/403");
