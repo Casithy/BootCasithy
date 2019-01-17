@@ -23,7 +23,6 @@
 			</div>
 	
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
-				<input th:fragment="userId" name="userId" type="hidden" th:value="${userId}" id="userId" />
 				<div id="menus"></div>
 			</div>
 		</div>
@@ -35,8 +34,6 @@
 	            url: "/user/loginUserInfo",
 	            dataType: "json",
 	            success: function(data){
-	            	$("#userId").attr("value", data.id);
-	            	userId = data.id;
 	            	var menus = new Array(data.menus);
 	            	var result = "";
 	            	for(var i = 0;i < menus.length; i++){

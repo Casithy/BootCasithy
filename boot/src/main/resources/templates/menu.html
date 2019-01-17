@@ -10,24 +10,25 @@
 				</div>
 				<div class="col-md-9">
 					<form class="form-horizontal">
+						<input type="hidden" id="parentId" name="parentId" value="">
 						<fieldset>
 							<legend>菜单详情</legend>
 							<div class="row">
 								<div class="col-md-10"></div>
 								<div class="col-md-2">
-									<button type="reset" class="btn-sm btn-primary">添加子菜单</button>
+									<input  type="button" class="btn-sm btn-primary" value="添加子菜单" onclick="insert()"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputEmail" class="col-lg-2 control-label">菜单名称</label>
 								<div class="col-lg-10">
-									<input type="text" class="form-control" id="name">
+									<input type="text" class="form-control" id="text">
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputPassword" class="col-lg-2 control-label">菜单链接</label>
 								<div class="col-lg-10">
-									<input type="text" class="form-control" id="url">
+									<input type="text" class="form-control" id="href">
 								</div>
 							</div>
 							<div class="form-group">
@@ -41,10 +42,10 @@
 									<div class="row">
 										<div class="col-md-3"></div>
 										<div class="col-md-2">
-											<button type="reset" class="btn btn-default">删除</button>
+											<input id="del" type="button" class="btn btn-default" value="删除" />
 										</div>
 										<div class="col-md-7">
-											<button type="submit" class="btn btn-primary">保存</button>
+											<input id="sav" type="button" class="btn btn-primary" value="保存" />
 										</div>
 									</div>
 								</div>
@@ -58,9 +59,21 @@
 </body>
 <script>
 		$(function() {
+			var userId = "";
+			/*获取UserId*/
 			$.ajax({
 	            type: "GET",
-	            url: "/menu/loadMenuTree/" + [[${userId}]],
+	            url: "/user/loginUserInfo",
+	            dataType: "json",
+	            async: false,
+	            success: function(data){
+	            	userId = data.id;
+	            }
+			});
+			/*获取菜单列表树*/
+			$.ajax({
+	            type: "GET",
+	            url: "/menu/loadMenuTree/" + userId,
 	            dataType: "json",
 	            success: function(data){
 	            	var $tree = $('#treeview').treeview({
@@ -78,8 +91,8 @@
 	    					showNode(node);
 	    				}
 	    			});
-	    			var ss = $('#treeview').treeview('getSelected');
-	    			showNode(ss[0]);
+	    			var sel = $('#treeview').treeview('getSelected');
+	    			showNode(sel[0]);
 	            },
 	            error: function(){
 	            	layer.alert('加载菜单树失败，请联系管理员', {icon: 5});
@@ -87,10 +100,18 @@
 	       });
 		});
 		function showNode(node){
-				$("#name").val('');$("#name").val(node.text);
-				$("#url").val('');$("#url").val(node.href);
-				$("#sortNo").val('');$("#sortNo").val(node.tags);
+			$("#text").val('');$("#text").val(node.text);
+			$("#href").val('');$("#href").val(node.href);
+			$("#sortNo").val('');$("#sortNo").val(node.tags);
 		}
-		
+		function insert(){
+			var sel = $('#treeview').treeview('getSelected');
+			$("#parentId").val('');$("#parentId").val(sel.id);
+			$("#text").val('');
+			$("#href").val('');
+			$("#sortNo").val('');
+			$("#del").val('');$("#del").val('取消');
+			$("#sav").val('');$("#sav").val('提交');
+		}
 	</script>
 </html>
