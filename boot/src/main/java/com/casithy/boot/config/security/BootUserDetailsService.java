@@ -46,7 +46,7 @@ public class BootUserDetailsService implements UserDetailsService{
 		
 		List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 		for(Menu menu : menuList) {
-			GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(menu.getUrl());
+			GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(menu.getHref());
 			grantedAuthorities.add(grantedAuthority);
 		}
 		user.setAuthorities(grantedAuthorities);

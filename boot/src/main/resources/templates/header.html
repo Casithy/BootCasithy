@@ -4,8 +4,11 @@
 		<script src="js/jquery-3.3.1.min.js" type="text/javascript"></script>
 		<script src="js/bootstrap.min.js" type="text/javascript"></script>
 		<script src="js/time.js" type="text/javascript"></script>
-		<link rel="stylesheet" type="text/css" href="js/theme/css/paper/bootstrap.min.css">
+		<script src="js/layer.js" type="text/javascript"></script>
+		<script src="js/bootstrap-treeview.min.js" type="text/javascript"></script>
+		<link href="js/theme/css/paper/bootstrap.min.css" rel="stylesheet" type="text/css" >
 		<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+		<link href="css/bootstrap-treeview.min.css" rel="stylesheet" type="text/css">
 	</head>
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="container-fluid">
@@ -20,6 +23,7 @@
 			</div>
 	
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+				<input th:fragment="userId" name="userId" type="hidden" th:value="${userId}" id="userId" />
 				<div id="menus"></div>
 			</div>
 		</div>
@@ -31,7 +35,8 @@
 	            url: "/user/loginUserInfo",
 	            dataType: "json",
 	            success: function(data){
-	            	console.log(data);
+	            	$("#userId").attr("value", data.id);
+	            	userId = data.id;
 	            	var menus = new Array(data.menus);
 	            	var result = "";
 	            	for(var i = 0;i < menus.length; i++){
@@ -39,12 +44,12 @@
 	            			if(menus[i][item].level == 1){
 	            				var num = judgeTheMenu(menus[i][item].id,menus);
 	            				if(num == 0){
-	            					result += "<li><a href='"+ menus[i][item].url +"'>"+ menus[i][item].name +"</a></li>"
+	            					result += "<li><a href='"+ menus[i][item].href +"'>"+ menus[i][item].text +"</a></li>"
 	            				}
 	            				else{
 	            					result += "<ul class='nav navbar-nav'> <li class='active'></li>";
 	            					result += "<li class='dropdown'>";
-	            					result += "<a href='"+ menus[i][item].url +"' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>"+ menus[i][item].name +"<span class='caret'></span></a>";
+	            					result += "<a href='"+ menus[i][item].href +"' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>"+ menus[i][item].text +"<span class='caret'></span></a>";
 	            					result += loadAMenu(menus[i][item].id,menus);
 	            					result += "</li>";
 	            					result += "</ul>";
@@ -79,7 +84,7 @@
     		for(var i = 0;i < menus.length; i++){
         		for(var item in menus[i]){
         			if(menus[i][item].parentId == menusId){
-        				result += "<li><a href='"+ menus[i][item].url +"'>"+ menus[i][item].name +"</a></li>"
+        				result += "<li><a href='"+ menus[i][item].href +"'>"+ menus[i][item].text +"</a></li>"
         			}
         		}
         	}

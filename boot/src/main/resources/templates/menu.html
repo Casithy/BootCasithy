@@ -1,0 +1,96 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:include="header:: header"></div>
+<body style="padding:80px;">
+	<div class="container">
+
+		<div class="well">
+			<div class="row">
+				<div class="col-md-3">
+					<div id="treeview" class=""></div>
+				</div>
+				<div class="col-md-9">
+					<form class="form-horizontal">
+						<fieldset>
+							<legend>菜单详情</legend>
+							<div class="row">
+								<div class="col-md-10"></div>
+								<div class="col-md-2">
+									<button type="reset" class="btn-sm btn-primary">添加子菜单</button>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputEmail" class="col-lg-2 control-label">菜单名称</label>
+								<div class="col-lg-10">
+									<input type="text" class="form-control" id="name">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputPassword" class="col-lg-2 control-label">菜单链接</label>
+								<div class="col-lg-10">
+									<input type="text" class="form-control" id="url">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputPassword" class="col-lg-2 control-label">排序编号</label>
+								<div class="col-lg-10">
+									<input type="text" class="form-control" id="sortNo">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-lg-10 col-lg-offset-2">
+									<div class="row">
+										<div class="col-md-3"></div>
+										<div class="col-md-2">
+											<button type="reset" class="btn btn-default">删除</button>
+										</div>
+										<div class="col-md-7">
+											<button type="submit" class="btn btn-primary">保存</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</fieldset>
+					</from>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+		$(function() {
+			$.ajax({
+	            type: "GET",
+	            url: "/menu/loadMenuTree/" + [[${userId}]],
+	            dataType: "json",
+	            success: function(data){
+	            	var $tree = $('#treeview').treeview({
+	    				data: data,
+	    				showIcon: true,
+	    				//showCheckbox: true,
+	    				showTags: true,
+	    				//onNodeChecked: function(event, node) {
+	    					//layer.alert(node.id+"--"+node.url, {icon: 6});
+	    				//},
+	    				//onNodeUnchecked: function (event, node) {
+	    					//$('#checkable-output').prepend('<p>' + node.text + ' was unchecked</p>');
+	    				//},
+	    				onNodeSelected: function(event, node) {
+	    					showNode(node);
+	    				}
+	    			});
+	    			var ss = $('#treeview').treeview('getSelected');
+	    			showNode(ss[0]);
+	            },
+	            error: function(){
+	            	layer.alert('加载菜单树失败，请联系管理员', {icon: 5});
+	            }
+	       });
+		});
+		function showNode(node){
+				$("#name").val('');$("#name").val(node.text);
+				$("#url").val('');$("#url").val(node.href);
+				$("#sortNo").val('');$("#sortNo").val(node.tags);
+		}
+		
+	</script>
+</html>

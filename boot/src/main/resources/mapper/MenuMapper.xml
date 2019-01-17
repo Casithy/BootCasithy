@@ -5,9 +5,9 @@
     <select id="loadMenusByUserId" resultType="com.casithy.boot.model.Menu">
 			SELECT
 				m.id,
-				m.name,
-						m.url,
-						m.parent_id as parentId,
+				m.text,
+				m.href,
+				m.parent_id as parentId,
 				m.level,
 				m.sort_no as sortNo
 			FROM

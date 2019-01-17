@@ -57,5 +57,10 @@ public class IndexController {
         SecurityUtils.logout();
         return "login";
     }
+    
+    @RequestMapping(value = "/menu")
+    public String menu() {
+    	return "menu";
+    }
 }
  
