@@ -50,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 //							 .and().exceptionHandling().accessDeniedPage("/403");
 							 
 							 
-        http.authorizeRequests()
+        http.csrf().disable().authorizeRequests()
                 // 所有用户均可访问的资源
                 .antMatchers("/css/**",
                 			 "/error/**",

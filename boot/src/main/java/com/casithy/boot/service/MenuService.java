@@ -14,5 +14,9 @@ public interface MenuService {
 
 	List<Menu> loadMenusByUserId(String userId);
 
+	void insert(Menu menu);
+
+	void delete(String menuId);
+
 }
  

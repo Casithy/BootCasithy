@@ -29,5 +29,15 @@ public class MenuServiceImpl implements MenuService{
 		return menuMapper.loadMenusByUserId(userId);
 	}
 
+	@Override
+	public void insert(Menu menu) {
+		menuMapper.insert(menu);
+	}
+
+	@Override
+	public void delete(String menuId) {
+		menuMapper.deleteByPrimaryKey(menuId);
+	}
+
 }
  

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.persistence.Id;
+
 /**
  * @author Casithy blog: https://casithy.cn
  *
@@ -12,6 +14,7 @@ import java.util.List;
  */
 public class Menu {
 	
+	@Id
 	private String id;
     private String text;
     private String href;

@@ -1,6 +1,5 @@
 package com.casithy.boot.controller;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,12 +7,17 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.casithy.boot.model.Menu;
 import com.casithy.boot.service.MenuService;
+import com.casithy.boot.utils.result.Result;
+import com.casithy.boot.utils.result.ResultGenerator;
+import com.casithy.boot.utils.service.UuidUtil;
 import com.casithy.boot.utils.tree.TreeUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -46,10 +50,21 @@ public class MenuController {
 		return menuTree;
 	}
 	
-	@RequestMapping(value="/insert")
-	public void insert(HttpServletRequest request) {
-		Menu menu = new Menu();
-		String parentId = request.getParameter("parentId");
+	@RequestMapping(value="/insert",method = RequestMethod.POST)
+	public ModelAndView insert(HttpServletRequest request, Menu menu) {
+		menu.setId(UuidUtil.getUuid());
+		menuService.insert(menu);
+		return new ModelAndView("menu");
+	}
+	
+	@RequestMapping(value="/delete/{menuId}")
+	public Result delete(@PathVariable("menuId") String menuId) {
+		try {
+			menuService.delete(menuId);
+			return ResultGenerator.genSuccessResult();
+		} catch (Exception e) {
+			return ResultGenerator.genFailResult("===== 删除菜单失败, 原因: " + e.getMessage() + " =====");
+		}
 	}
 }
  

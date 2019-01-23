@@ -9,8 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.casithy.boot.config.security.SecurityUtils;
-import com.casithy.boot.model.User;
-import com.casithy.boot.utils.result.ResultGenerator;
 
 /**
  * 

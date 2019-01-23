@@ -9,32 +9,41 @@
 					<div id="treeview" class=""></div>
 				</div>
 				<div class="col-md-9">
-					<form class="form-horizontal">
-						<input type="hidden" id="parentId" name="parentId" value="">
+					<form id="menuForm" class="form-horizontal" action="/menu/insert" method="post">
+						<input type="hidden" id="id" name="id" value="" />
+						<input type="hidden" id="level" name="level" value="" />
 						<fieldset>
 							<legend>菜单详情</legend>
 							<div class="row">
 								<div class="col-md-10"></div>
 								<div class="col-md-2">
-									<input  type="button" class="btn-sm btn-primary" value="添加子菜单" onclick="insert()"/>
+									<input  type="button" class="btn-sm btn-primary" value="添加" onclick="insert()"/>
+									<input  type="button" class="btn-sm btn-primary" value="删除" onclick="delInit()"/>
+								</div>
+							</div>
+							<div class="form-group" style="display:none;" id="inputparent">
+								<label for="inputparent" class="col-lg-2 control-label">父级菜单</label>
+								<div class="col-lg-10">
+									<input type="text" class="form-control" id="parentText" value="" readonly />
+									<input type="hidden" id="parentId" name="parentId" value="" />
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputEmail" class="col-lg-2 control-label">菜单名称</label>
 								<div class="col-lg-10">
-									<input type="text" class="form-control" id="text">
+									<input type="text" class="form-control" id="text" name="text">
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputPassword" class="col-lg-2 control-label">菜单链接</label>
 								<div class="col-lg-10">
-									<input type="text" class="form-control" id="href">
+									<input type="text" class="form-control" id="href" name="href">
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputPassword" class="col-lg-2 control-label">排序编号</label>
 								<div class="col-lg-10">
-									<input type="text" class="form-control" id="sortNo">
+									<input type="text" class="form-control" id="sortNo" name="sortNo">
 								</div>
 							</div>
 							<div class="form-group">
@@ -42,10 +51,10 @@
 									<div class="row">
 										<div class="col-md-3"></div>
 										<div class="col-md-2">
-											<input id="del" type="button" class="btn btn-default" value="删除" />
+											<input id="del" type="button" class="btn btn-default" onclick="location.reload();" value="取消" />
 										</div>
 										<div class="col-md-7">
-											<input id="sav" type="button" class="btn btn-primary" value="保存" />
+											<input id="sav" type="button" class="btn btn-primary"  value="保存" />
 										</div>
 									</div>
 								</div>
@@ -58,6 +67,7 @@
 	</div>
 </body>
 <script>
+		/* =================  展示菜单  ==============*/
 		$(function() {
 			var userId = "";
 			/*获取UserId*/
@@ -100,18 +110,68 @@
 	       });
 		});
 		function showNode(node){
+			$("#id").val('');$("#id").val(node.id);
 			$("#text").val('');$("#text").val(node.text);
 			$("#href").val('');$("#href").val(node.href);
 			$("#sortNo").val('');$("#sortNo").val(node.tags);
 		}
+		
+		/* =================  新增菜单  ==============*/
 		function insert(){
 			var sel = $('#treeview').treeview('getSelected');
-			$("#parentId").val('');$("#parentId").val(sel.id);
+			$("#parentId").val('');$("#parentId").val(sel[0].id);
+			$("#level").val('');$("#level").val(parseInt(sel[0].level)+1);
+			$("#inputparent").attr("style","display:block;");
+			$("#parentText").val('');$("#parentText").val(sel[0].text);
 			$("#text").val('');
 			$("#href").val('');
 			$("#sortNo").val('');
-			$("#del").val('');$("#del").val('取消');
-			$("#sav").val('');$("#sav").val('提交');
+			$("#sav").removeAttr("onclick");
+			$("#sav").attr("onclick","submit();");
+		}
+		function submit(){
+			var text = $("#text").val();
+			var href = $("#href").val();
+			var sortNo = $("#sortNo").val();
+			if(text == "" || text == null || text != undefined){
+				layer.alert('请输入正确的菜单名称.', {icon: 5});
+			}
+			else if(href == "" || href == null || href != undefined){
+				layer.alert('请输入正确的菜单链接.', {icon: 5});
+			}
+			else if(sortNo == "" || sortNo == null || sortNo != undefined){
+				layer.alert('请输入正确的排序编号.', {icon: 5});
+			}
+			else{
+				$("#menuForm").submit();
+			}
+		}
+		
+		/* =================  删除菜单  ==============*/
+		function delInit(){
+			var menuId = $("#id").val();
+			var menuText = $("#text").val();
+			del(menuId, menuText);
+		}
+		
+		function del(menuId, menuText){
+			layer.confirm('确认删除【'+ menuText +'】菜单？子菜单也会随之删除，且删除后不可恢复.', {
+				skin: 'layui-layer-lan',
+				btn: ['确认','取消']
+			}, function(){
+				$.ajax({
+		            type: "GET",
+		            url: "/menu/delete/" + menuId,
+		            dataType: "json",
+		            success: function(data){
+		            	console.log(data);
+		            	layer.alert('删除成功', {icon: 6});
+		            },
+		            error: function(){
+		            	layer.alert('删除菜单失败，请联系管理员', {icon: 5});
+		            }
+		       });
+			});
 		}
 	</script>
 </html>
