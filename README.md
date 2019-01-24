@@ -9,3 +9,4 @@
 6、 spring security </br>
 7、 thymeleaf </br>
 8、 bootstrap-treeview </br>
+9、 redis </br>
