@@ -50,7 +50,7 @@ public class MenuController {
 		return menuTree;
 	}
 	
-	@RequestMapping(value="/insert",method = RequestMethod.POST)
+	@RequestMapping(value="/insert", method = RequestMethod.POST)
 	public ModelAndView insert(HttpServletRequest request, Menu menu) {
 		menu.setId(UuidUtil.getUuid());
 		menuService.insert(menu);
@@ -65,6 +65,12 @@ public class MenuController {
 		} catch (Exception e) {
 			return ResultGenerator.genFailResult("===== 删除菜单失败, 原因: " + e.getMessage() + " =====");
 		}
+	}
+	
+	@RequestMapping(value="/update", method = RequestMethod.POST)
+	public ModelAndView update(HttpServletRequest request, Menu menu) {
+		menuService.update(menu);
+		return new ModelAndView("menu");
 	}
 }
  

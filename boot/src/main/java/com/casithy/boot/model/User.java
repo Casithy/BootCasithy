@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.Id;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -17,7 +19,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class User implements UserDetails,Serializable{
 
 	private static final long serialVersionUID = 1L;
-
+	
+	@Id
 	private String id;
 	
 	/**

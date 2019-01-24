@@ -39,5 +39,10 @@ public class MenuServiceImpl implements MenuService{
 		menuMapper.deleteByPrimaryKey(menuId);
 	}
 
+	@Override
+	public void update(Menu menu) {
+		menuMapper.updateByPrimaryKeySelective(menu);
+	}
+
 }
  

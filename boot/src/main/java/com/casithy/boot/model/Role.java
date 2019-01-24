@@ -1,4 +1,7 @@
-package com.casithy.boot.model; 
+package com.casithy.boot.model;
+
+import javax.persistence.Id;
+
 /**
  * @author Casithy blog: https://casithy.cn
  *
@@ -8,6 +11,7 @@ package com.casithy.boot.model;
 
 public class Role {
 	
+	@Id
 	private String id;
 	
 	private String roleName;
